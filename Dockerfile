@@ -1,19 +1,16 @@
+ARG NODE_VERSION=22-bookworm-slim
 ARG N8N_VERSION=2.4.5
-ARG PYTHON_VERSION=3.12-slim-bookworm
 
-FROM python:${PYTHON_VERSION} AS python-runtime
-
-FROM docker.n8n.io/n8nio/n8n:${N8N_VERSION}
+FROM node:${NODE_VERSION}
 
 USER root
 
-COPY --from=python-runtime /usr/local /usr/local
+ENV NODE_ENV=production     N8N_PORT=5678     N8N_RUNNERS_ENABLED=true     N8N_RUNNERS_MODE=internal     N8N_NATIVE_PYTHON_RUNNER=true
 
-ENV PATH="/usr/local/bin:${PATH}"
+RUN set -eux;     apt-get update;     apt-get install -y --no-install-recommends ca-certificates python3 python3-pip tini;     ln -sf /usr/bin/python3 /usr/local/bin/python;     npm install -g n8n@${N8N_VERSION};     npm cache clean --force;     apt-get clean;     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;     python3 --version;     python --version;     n8n --version
 
-RUN set -eux;     python3 --version;     python --version;     python3 - <<'PY'
-import json
-print(json.dumps({"python_runtime_ok": True}))
-PY
-
+WORKDIR /home/node
+EXPOSE 5678
 USER node
+ENTRYPOINT ["tini", "--"]
+CMD ["n8n", "start"]
