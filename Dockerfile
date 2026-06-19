@@ -29,10 +29,10 @@ RUN mkdir -p /tmp/n8n-src && tar -xzf /tmp/n8n.tar.gz -C /tmp/n8n-src
 RUN mkdir -p /usr/local/lib/node_modules/@n8n && cp -a /tmp/n8n-src/n8n-n8n-${N8N_VERSION}/packages/@n8n/task-runner-python /usr/local/lib/node_modules/@n8n/task-runner-python
 RUN cd /usr/local/lib/node_modules/@n8n/task-runner-python && uv venv && uv sync --frozen --no-dev --all-extras --no-editable
 RUN test -x /usr/local/lib/node_modules/@n8n/task-runner-python/.venv/bin/python && /usr/local/lib/node_modules/@n8n/task-runner-python/.venv/bin/python --version && n8n --version
-RUN chown -R node:node /home/node /usr/local/lib/node_modules/@n8n/task-runner-python && rm -rf /tmp/* /root/.cache
+RUN mkdir -p /home/node && chown -R 1000:1000 /home/node /usr/local/lib/node_modules/@n8n/task-runner-python && rm -rf /tmp/* /root/.cache
 
 WORKDIR /home/node
 EXPOSE 5678
-USER node
+USER 1000:1000
 ENTRYPOINT ["tini", "--"]
 CMD ["n8n", "start"]
