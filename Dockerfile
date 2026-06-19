@@ -35,8 +35,7 @@ RUN test -x /usr/local/lib/node_modules/@n8n/task-runner-python/.venv/bin/python
 RUN mkdir -p /home/node && chown -R 1000:1000 /home/node /usr/local/lib/node_modules/@n8n/task-runner-python && rm -rf /tmp/* /root/.cache
 
 WORKDIR /home/node
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh && chown 1000:1000 /entrypoint.sh
 EXPOSE 5678
 USER 1000:1000
-ENTRYPOINT ["tini", "--", "/bin/sh", "/entrypoint.sh"]
+ENTRYPOINT ["tini", "--"]
+CMD ["n8n", "start"]
