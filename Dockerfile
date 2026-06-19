@@ -14,6 +14,7 @@ ENV N8N_PORT=5678
 ENV N8N_RUNNERS_ENABLED=true
 ENV N8N_RUNNERS_MODE=internal
 ENV N8N_NATIVE_PYTHON_RUNNER=true
+ENV HOME=/home/node
 ENV PATH=/usr/local/bin:${PATH}
 
 COPY --from=node-runtime /usr/local /usr/local
