@@ -16,7 +16,7 @@ The official `docker.n8n.io/n8nio/n8n:latest` image started n8n successfully but
 - Copies a Python 3 runtime into the n8n image using a multi-stage Docker build.
 - Does not depend on `apt-get` or `apk` inside the n8n base image.
 - Validates `python3` and `python` during image build.
-- Leaves n8n entrypoint, command, port behavior, and user model unchanged.
+- Uses n8n-managed internal task runners, retaining native Python execution without hand-rolled, short-lived broker grant-token handling.
 
 ## Render service
 
