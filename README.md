@@ -8,7 +8,7 @@ The official `docker.n8n.io/n8nio/n8n:latest` image started n8n successfully but
 
 ## Base images
 
-- n8n: `docker.n8n.io/n8nio/n8n:2.4.5`
+- n8n: `docker.n8n.io/n8nio/n8n:2.15.0`
 - Python runtime donor stage: `python:3.12-slim-bookworm`
 
 ## Runtime changes
